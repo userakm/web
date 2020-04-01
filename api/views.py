@@ -1,50 +1,40 @@
 from django.shortcuts import render
-
 from django.http.response import JsonResponse
-
-from api.models import Company
-from api.models import Vacancy
-
-
-def company_list(request):
-    c_list = Company.objects.all()
-    companies_json = [company.to_json() for company in c_list]
-    return JsonResponse(companies_json, safe=False)
+from django.http import Http404
+from api.models import Product
+from api.models import Category
 
 
-def company_detail(request, company_id):
+def product_list(request):
+    p_list = Product.objects.all()
+    products_json = [product.to_json() for product in p_list]
+    return JsonResponse(products_json, safe=False)
+
+
+def products_detail(request, id):
     try:
-        company = Company.objects.get(id=company_id)
-    except Company.DoesNotExist as e:
+        product = Product.objects.get(id=id)
+    except Product.DoesNotExist as e:
         return JsonResponse({'error': str(e)})
-    return JsonResponse(company.to_json(), safe=False)
+    return JsonResponse(product.to_json())
 
 
-def company_vacancy(request, company_id):
+def category_list(request):
+    c_list = Category.objects.all()
+    categories_json = [category.to_json() for category in c_list]
+    return JsonResponse(categories_json, safe=False)
+
+
+def category_detail(request, id):
     try:
-        company = Company.objects.get(id=company_id)
-    except Company.DoesNotExist as e:
+        category = Category.objects.get(id=id)
+    except Category.DoesNotExist as e:
         return JsonResponse({'error': str(e)})
-    vacancies = company.vacancy_set.all()
-    vacancies_json = [vacancy.to_json() for vacancy in vacancies]
-    return JsonResponse(vacancies_json, safe=False)
+    return JsonResponse(category.to_json())
 
 
-def vacancy_list(request):
-    v_list = Vacancy.objects.all()
-    vacancies_json = [vacancy.to_json() for vacancy in v_list]
-    return JsonResponse(vacancies_json, safe=False)
-
-
-def vacancy_detail(request, vacancy_id):
-    try:
-        vacancy = Vacancy.objects.get(id=vacancy_id)
-    except Vacancy.DoesNotExist as e:
-        return JsonResponse({'error': str(e)})
-    return JsonResponse(vacancy.to_json(), safe=False)
-
-
-def vacancies_top_ten(request):
-    vacancies = Vacancy.objects.all().order_by('-salary')[:10]
-    vacancies_json = [vacancy.to_json() for vacancy in vacancies]
-    return JsonResponse(vacancies_json, safe=False)
+def category_product(request, id):
+    category = Category.objects.get(id=id)
+    products = category.product_set.all()
+    products_json = [product.to_json() for product in products]
+    return JsonResponse(products_json, safe=False)
