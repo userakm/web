@@ -1,0 +1,9 @@
+<div class = "company-detail">
+  <div *ngIf="company">
+    <h2>{{company.name}}</h2>
+    <h2>{{company.address}}</h2>
+    <h2>{{company.description}}</h2>
+    <h2>{{company.city}}</h2>
+    <h2 [routerLink] =  "'/companies/vacancies/' + company.id">choose your vacancy</h2>
+  </div>
+</div>'

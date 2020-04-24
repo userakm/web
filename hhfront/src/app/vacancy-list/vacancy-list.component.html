@@ -1,0 +1,5 @@
+<div class = "vacancies">
+  <div *ngFor="let vacancy of vacancies">
+    <a [routerLink]="'/vacancies/' + vacancy.id">{{ vacancy.name }}</a>
+  </div>
+</div>

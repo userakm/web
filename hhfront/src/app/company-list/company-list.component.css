@@ -1,0 +1,15 @@
+.company-list {
+  width: 70%;
+  margin: 100px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.choose {
+  width: 40%;
+  font: 20px Helvetica, Arial, sans-serif;
+  margin: 200px auto;
+  text-align: center;
+  color: grey;
+}
